@@ -69,7 +69,7 @@
         xhttp.send();
 
         var url = window.location.host;
-        var socket = io('http://' + url + ':3002');
+        var socket = io('http://' + url + ':3000');
 
         socket.on("user_" + {{ Auth::user()->id }} +"_game_{{ $game->id }}:App\\Events\\DegreeSaved", function (message) {
             // increase the power everytime we load test route
