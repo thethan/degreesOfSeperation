@@ -18,7 +18,7 @@ class Results extends Model
     public function gameStart(Game $game)
     {
         $result = [];
-        $dos = self::dosObject($game->start, $game->start_name, $game->start_poster, $game->start_type);
+        $dos = self::dosObject($game->start, $game->start_name, $game->start_image, $game->start_type);
         $result[] = $dos;
 
         $this->results = json_encode($result);
@@ -39,4 +39,6 @@ class Results extends Model
         $this->results = json_encode($dos);
         $this->save();
     }
+
+
 }

@@ -43,9 +43,10 @@ class ReadyPlayerOne extends Job
     {
         $this->gameModel->getItemsForViewing();
 
-        $this->resultsModel->gameStart($this->gameModel);
-
-        $this->resultsModel->save();
+        if(empty($this->resultsModel->results) ){
+            $this->resultsModel->gameStart($this->gameModel);
+            $this->resultsModel->save();
+        }
 
         return $this->resultsModel;
     }

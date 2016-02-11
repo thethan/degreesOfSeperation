@@ -33,9 +33,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::put('/degrees/save/{id}', 'DegreesController@saveDegrees');
 
+    Route::get('/degrees/{gameId}/{id}', 'DegreesController@getResult');
+
     Route::put('/degrees/person/{id}', 'DegreesController@personSelected');
 
     Route::get('/play', 'PlayController@index');
+
+    Route::post('/play/validate/{resultId?}', 'PlayController@validateResults');
 
     Route::get('/play/{id}/{resultId?}', 'PlayController@show');
 

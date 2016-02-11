@@ -25,7 +25,6 @@ class DegreeSaved extends Event implements ShouldBroadcast
         $this->userId = $userId;
 
         $this->data = array(
-            'power'=> '10',
             'dos' => $dos,
         );
     }

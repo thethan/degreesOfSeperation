@@ -78,7 +78,6 @@ class DegreesController extends Controller
     public function saveDegrees(Request $request, $id)
     {
 
-
         $result = Results::findOrFail($id);
 
         $array = $request->only(['id', 'type']);
@@ -91,7 +90,6 @@ class DegreesController extends Controller
 
         $dos[] = $obj;
 
-
         $userId = Auth::user()->id;
 
         event(new DegreeSaved($userId, $dos, $result->game_id));
@@ -100,6 +98,18 @@ class DegreesController extends Controller
 
 
         return response(null,204);
+
+    }
+
+    public function getResult(Request $request, $gameId, $id)
+    {
+        $result = Results::findOrFail($id);
+
+        $userId = Auth::user()->id;
+
+        event(new DegreeSaved($userId, json_decode($result->results), $result->game_id));
+
+        return response()->json(json_decode($result->results));
 
     }
 
@@ -143,6 +153,11 @@ class DegreesController extends Controller
 //        $movies->setCredits($id);
 //        $this->dispatch(new CacheCredits($movies));
 
+
+    }
+
+    protected function fireTheEvent()
+    {
 
     }
 

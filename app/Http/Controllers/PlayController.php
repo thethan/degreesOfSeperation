@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ReadyPlayerOne;
+use App\Jobs\ValidateResults;
 use Gate;
 use App\Game;
 use App\Results;
@@ -23,27 +24,23 @@ class PlayController extends Controller
 
         $value = Cache::get('user_'.$userId.'_game_'.$id);
 
-        $result = Results::findOrNew($resultId);
-
         $game = Game::findOrFail($id);
+        $result = Results::find($resultId);
+        if(empty($result)) {
+            $result = Results::where('game_id', $id)->where('user_id',$userId)->orderBy('id', 'DESC')->where('validated', 0)->first();
+
+            if(!empty($result)){
+                $resultId = $result->id;
+            }
+        }
 
         if($resultId) {$this->authorize('show', [$result, $game]); }
 
-
         $result = dispatch(new ReadyPlayerOne($game, $resultId));
-
-
-
-//        $game->getItemsForViewing();
-
-        //Broadcast
-        //event(new DegreeSaved($userId, [], $result->game_id));
-
 
         return view('play.game')
             ->with('game', $game)
             ->with('result', $result);
-
 
     }
 
@@ -58,8 +55,12 @@ class PlayController extends Controller
         return view('play.index')->with('games', $games);
     }
 
-    public function validate()
+    public function validateResults(Request $request, $resultId )
     {
+        $result = Results::findOrFail($resultId);
 
+        $resultClass = $this->dispatch(new ValidateResults($result));
+
+        return response()->json(json_decode($resultClass->results));
     }
 }

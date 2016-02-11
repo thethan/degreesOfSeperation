@@ -20,11 +20,16 @@
                     </div>
                 </div>
 
-                <input class="movie typeahead col-sm-10 col-sm-offset-1">
-                <input class="person typeahead col-sm-10 col-sm-offset-1">
+
             </div>
-            {{  csrf_field() }}
         </div>
+
+        {{  csrf_field() }}
+        <input class="movie typeahead col-sm-3 col-sm-offset-1">
+        <input class="person typeahead col-sm-4 col-sm-offset-1">
+
+
+        <a id="validate" onclick="validate()" class="col-sm-2 btn btn-large btn-primary-outline" type="submit" value="submit">validate</a>
     </section>
 @endsection
 
@@ -32,39 +37,75 @@
 @section('scripts')
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <script>
-        //var socket = io('http://localhost:3000');
-        var url = window.location.href;
-        var socket = io('http://imdb.app:3000');
 
-        socket.on("user_"+ {{ Auth::user()->id }} + "_game_{{ $game->id }}:App\\Events\\DegreeSaved", function (message) {
-            console.log(message);
+        function validate(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    dos = JSON.parse(xhttp.responseText);
+                    console.log(dos);
+                    validatedDegrees(dos);
+
+                }
+            };
+            xhttp.open("POST", "/play/validate/{{ $result->id }}", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            xhttp.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
+            xhttp.send();
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                dos = JSON.parse(xhttp.responseText);
+                console.log(dos);
+                dosToDegrees(dos);
+                nextDegree(dos);
+            }
+        };
+
+        xhttp.open("GET", "/degrees/{{$game->id}}/{{ $result->id }}", true);
+        xhttp.send();
+
+        var url = window.location.host;
+        var socket = io('http://' + url + ':3002');
+
+        socket.on("user_" + {{ Auth::user()->id }} +"_game_{{ $game->id }}:App\\Events\\DegreeSaved", function (message) {
             // increase the power everytime we load test route
 //            $('#degrees').text(parseInt($('#degrees').text()) + parseInt(message.data.power));
             addDegrees(message);
 
         });
 
-        showNext('movie');
-        /*  socket.on("test-channel:App\\Events\\DegreeSaved", function (message) {
-         // increase the power everytime we load test route
-         console.log(message);
-         $('#degrees').text(parseInt($('#degrees').text()) + parseInt(message.data.power));
-         });*/
-
-        function addDegrees(message){
+        function addDegrees(message) {
             degreesToHtml(message.data.dos);
             nextDegree(message.data.dos);
         }
-        function degreesToHtml(dos){
+        function degreesToHtml(dos) {
+
+            dosToDegrees(dos);
+        }
+
+        function dosToDegrees(dos) {
+
             var html = '';
-            for(var i = 0; i < dos.length; i++){
-                html += '<img class="'+ dos[i].type+'" src="https://image.tmdb.org/t/p/w185/'+ dos[i].poster_path+'" >';
+            for (var i = 0; i < dos.length; i++) {
+                html += '<img class="' + dos[i].type + '" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" >';
             }
             document.getElementById('degrees').innerHTML = html;
         }
 
-        function nextDegree(dos){
-            switch(dos[dos.length -1].type){
+        function validatedDegrees(dos) {
+            var html = '';
+            for (var i = 0; i < dos.length; i++) {
+                html += '<img class="' + dos[i].type + ' '+ dos[i].class +'" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" >';
+            }
+            document.getElementById('degrees').innerHTML = html;
+        }
+
+        function nextDegree(dos) {
+            switch (dos[dos.length - 1].type) {
                 case 'person':
                     showNext('movie');
                     break;
@@ -74,12 +115,16 @@
             }
         }
 
-        function showNext(type){
+        function showNext(type) {
             $('.typeahead').hide();
-            $('.'+type+'.typeahead').show().val('');
+            $('.' + type + '.typeahead').show().val('');
         }
 
+        function checklast(dos) {
+            last = dos.length - 1;
 
+
+        }
     </script>
     <script>
         var movies = new Bloodhound({
