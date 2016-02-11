@@ -1,0 +1,36 @@
+
+.item, .grid-item {
+  transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -webkit-transition: opacity 3s ease-in-out;
+
+  background-color: #efefef;
+  -webkit-transition: all 3s ease-in-out;
+  -moz-transition: all 3s ease-in-out;
+  -o-transition: all 3s ease-in-out;
+  -ms-transition: all 3s ease-in-out;
+
+  opacity: 1;
+
+
+  &.clicked {
+    opacity: 0;
+    -webkit-transform: rotateZ(360deg) scale(3);
+    -moz-transform: rotateZ(360deg) scale(3);
+    -o-transform: rotateZ(360deg) scale(3);
+    -ms-transform: rotateZ(360deg) scale(3);
+  }
+  &.fade {
+    opcaity:0;
+    //-webkit-transform:  scale;
+    //-moz-transform: scale(.1);
+    //-o-transform: scale(.1);
+    //-ms-transform:   scale(.1);
+  }
+}
+
+.grid-item {
+
+
+}
+
