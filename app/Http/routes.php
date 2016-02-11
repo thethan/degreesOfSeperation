@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
 
     Route::get('/play', 'PlayController@index');
 
-    Route::get('/play/validate/{resultId?}', 'PlayController@validateResults');
+    Route::post('/play/validate/{resultId?}', 'PlayController@validateResults');
 
     Route::get('/play/{id}/{resultId?}', 'PlayController@show');
 
