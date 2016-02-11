@@ -61,6 +61,22 @@ class PlayController extends Controller
 
         $resultClass = $this->dispatch(new ValidateResults($result));
 
-        return response()->json(json_decode($resultClass->results));
+        $resultClass->results = json_decode($resultClass->results);
+
+        $return = $resultClass;
+
+        return response()->json($return);
+    }
+
+    protected function statusCodes($correct)
+    {
+        switch ($correct){
+            case null:
+                return 304;
+                break;
+            case 0:
+                return 100;
+
+        }
     }
 }

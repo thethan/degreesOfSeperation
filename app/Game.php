@@ -13,8 +13,9 @@ class Game extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function readable()
+    public function results()
     {
+        return $this->hasMany(Results::class);
     }
 
     public static function userGames($user_id )

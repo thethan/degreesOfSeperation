@@ -19,6 +19,8 @@ class ValidateResults extends Job
     public $model;
     public $results;
 
+    public $correct;
+
     /**
      * Create a new job instance.
      *
@@ -32,6 +34,8 @@ class ValidateResults extends Job
         $this->model->validated = 1;
         $this->model->save();
 
+        $this->correct = $this->model->correct;
+
     }
 
     /**
@@ -41,23 +45,63 @@ class ValidateResults extends Job
      */
     public function handle()
     {
-        for($i = 1; $i < (count($this->results) -1); $i++) {
-            $next = $this->results[$i+1];
+        //want the current Id in the last result movie
+        for($i = 1; $i < (count($this->results)); $i++) {
+
             $current = $this->results[$i];
+            $prev = $this->results[$i-1];
 
             $currentCache = $this->returnCache($current);
+            $prevCache = $this->returnCache($prev);
 
-            $return = $this->loopThroughCredits($currentCache->cast, $next->id);
+            $this->results[$i]->correct = $this->loopThroughCredits($prevCache->cast, $current->id);
 
-            $this->results[$i]->class = $this->addClass($return);
+
+            $this->results[$i]->class = $this->addClass($this->results[$i]->correct);
+
         }
+
         // last element
-
-        $this->results[$i]->class = $this->addClass($return);
-
+        $this->validate();
         $this->model->results = json_encode($this->results);
 
         return $this->model;
+    }
+
+    public function validate()
+    {
+        $this->validateLast();
+
+
+        $this->checkIfCorrect();
+
+
+        //TODO add the correct
+        // $this->finalCorrect();
+    }
+
+    protected function validateLast()
+    {
+        $game = $this->model->game;
+
+        $last = end($this->results);
+        $key = key($last);
+
+
+        if(!((int)$game->end === $last->id && $game->end_type === $last->type)){
+            $this->results[$key] = $this->addClass('wtf');
+            $this->correct = 0;
+        }
+    }
+
+
+    protected function finalCorrect()
+    {
+        if($this->correct !== 0 || $this->correct === null){
+            $this->correct = 1;
+            $this->model->correct = $this->correct;
+            $this->model->save();
+        }
     }
 
     protected function returnCache($result)
@@ -112,10 +156,28 @@ class ValidateResults extends Job
 
     protected function addClass($bool)
     {
-        if($bool){
-            return 'correct';
+
+        switch ($bool){
+            case true:
+                return 'corrent';
+            case 'wtf':
+                return 'wtf';
+            default:
+                return 'wrong';
+
         }
-        return 'wrong';
+    }
+
+    protected function checkIfCorrect()
+    {
+        foreach($this->results as $result){
+            if(property_exists($result, 'correct')){
+                if($result->correct !== true){
+                    $this->correct = 0;
+                    break;
+                }
+            }
+        }
     }
 
 }

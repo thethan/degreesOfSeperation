@@ -23,7 +23,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function () {
 
     Route::get('/movies/{id}', 'DegreesController@findMovies');
 
@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('/play', 'PlayController@index');
 
-    Route::post('/play/validate/{resultId?}', 'PlayController@validateResults');
+    Route::get('/play/validate/{resultId?}', 'PlayController@validateResults');
 
     Route::get('/play/{id}/{resultId?}', 'PlayController@show');
 
@@ -49,7 +49,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::post('/games', 'GamesController@save');
 
-    Route::get('games/{id}', 'GamesController@show');
+    Route::get('/games/{id}', 'GamesController@show');
 
 });
 

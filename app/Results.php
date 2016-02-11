@@ -12,7 +12,7 @@ class Results extends Model
 
     public function game()
     {
-        return $this->belongsTo('App/Game');
+        return $this->belongsTo(Game::class);
     }
 
     public function gameStart(Game $game)

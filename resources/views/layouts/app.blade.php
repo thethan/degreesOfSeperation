@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>SelfTotten.com</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -182,13 +182,13 @@
             &#9776;
         </button>
         <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-            <a class="navbar-brand" href="#">Responsive navbar</a>
+            <a class="navbar-brand" href="#">SelfTotten.com</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
 
-                <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
+                <li class="nav-item"><a class="nav-link" href="/degrees/games">Degrees</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right nav-item pull-xs-right">
                 <!-- Authentication Links -->

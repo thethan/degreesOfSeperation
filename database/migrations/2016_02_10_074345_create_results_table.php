@@ -18,8 +18,10 @@ class CreateResultsTable extends Migration
             $table->integer('user_id');
             $table->integer('game_id');
             $table->integer('steps')->default(0);
-            $table->boolean('validated')->default(0);
             $table->text('results')->nullable();
+
+            $table->boolean('validated')->default(0);
+            $table->boolean('correct')->nullable();
 
             $table->timestamps();
         });

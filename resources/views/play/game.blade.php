@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-sm-10 col-sm-offset-1">
-                <div id="degrees">
+                <div id="degrees" class="row">
                     <div class="col-sm-12">
 
                     </div>
@@ -48,7 +48,7 @@
 
                 }
             };
-            xhttp.open("POST", "/play/validate/{{ $result->id }}", true);
+            xhttp.open("POST", "/degrees/play/validate/{{ $result->id }}", true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
             xhttp.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}");
@@ -65,7 +65,7 @@
             }
         };
 
-        xhttp.open("GET", "/degrees/{{$game->id}}/{{ $result->id }}", true);
+        xhttp.open("GET", "/degrees/degrees/{{$game->id}}/{{ $result->id }}", true);
         xhttp.send();
 
         var url = window.location.host;
@@ -91,7 +91,7 @@
 
             var html = '';
             for (var i = 0; i < dos.length; i++) {
-                html += '<img class="' + dos[i].type + '" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" >';
+                html += '<div class="'+  dos[i].class +' "><img class="' + dos[i].type + '" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" ></div>';
             }
             document.getElementById('degrees').innerHTML = html;
         }
@@ -99,7 +99,7 @@
         function validatedDegrees(dos) {
             var html = '';
             for (var i = 0; i < dos.length; i++) {
-                html += '<img class="' + dos[i].type + ' '+ dos[i].class +'" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" >';
+                html += '<div class="'+ dos[i].type +'"><img class="' + dos[i].type  +'" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" ></div>';
             }
             document.getElementById('degrees').innerHTML = html;
         }
@@ -135,7 +135,7 @@
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
                 wildcard: '%QUERY',
-                url: '/search/movies/' + '%QUERY',
+                url: '/degrees/search/movies/' + '%QUERY',
                 filter: function (obj) {
                     // Map the remote source JSON array to a JavaScript object array
                     return $.map(obj.results, function (result) {
@@ -201,7 +201,7 @@
             datum.type = 'movie';
             var xhr = new XMLHttpRequest()
             var self = this
-            xhr.open('PUT', '/degrees/save/{{$result->id}}', true);
+            xhr.open('PUT', '/degrees/degrees/save/{{$result->id}}', true);
             var params = datum;
 
             xhr.setRequestHeader("Content-type", "application/json");
@@ -232,7 +232,7 @@
             datum.type = 'person';
             var xhr = new XMLHttpRequest()
             var self = this
-            xhr.open('PUT', '/degrees/save/{{$result->id}}', true);
+            xhr.open('PUT', '/degrees/degrees/save/{{$result->id}}', true);
             var params = datum;
 
             xhr.setRequestHeader("Content-Type", "application/json");
