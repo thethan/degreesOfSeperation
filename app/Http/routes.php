@@ -25,32 +25,39 @@
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function () {
 
+    Route::group(['as' => 'search::'], function () {
+        Route::get('/search/movies/{search}', 'DegreesController@searchMovies')->name('movies');
+
+        Route::get('/search/people/{search}', 'DegreesController@searchPeople')->name('people');
+
+    });
     Route::get('/movies/{id}', 'DegreesController@findMovies');
 
-    Route::get('/search/movies/{search}', 'DegreesController@searchMovies');
+    Route::group(['as' => 'degrees::'], function () {
+        Route::put('/degrees/save/{id}', 'DegreesController@saveDegrees')->name('save');
 
-    Route::get('/search/people/{search}', 'DegreesController@searchPeople');
+        Route::get('/degrees/{gameId}/{id}', 'DegreesController@getResult')->name('result');
 
-    Route::put('/degrees/save/{id}', 'DegreesController@saveDegrees');
+        Route::put('/degrees/person/{id}', 'DegreesController@personSelected')->name('person');
+    });
 
-    Route::get('/degrees/{gameId}/{id}', 'DegreesController@getResult');
+    Route::group(['as' => 'play::'], function () {
+        Route::get('/play', 'PlayController@index')->name('index');
 
-    Route::put('/degrees/person/{id}', 'DegreesController@personSelected');
+        Route::post('/play/validate/{resultId?}', 'PlayController@validateResults')->validate();
 
-    Route::get('/play', 'PlayController@index');
-
-    Route::post('/play/validate/{resultId?}', 'PlayController@validateResults');
-
-    Route::get('/play/{id}/{resultId?}', 'PlayController@show');
+        Route::get('/play/{id}/{resultId?}', 'PlayController@show')->name('show');
+    });
 
     Route::get('/clear', 'DegreesController@clearDegrees');
+    Route::get(['as' => 'games::'], function () {
 
-    Route::get('/games', 'GamesController@index');
+        Route::get('/games', 'GamesController@index')->name('index');
 
-    Route::post('/games', 'GamesController@save');
+        Route::post('/games', 'GamesController@save')->name('save');
 
-    Route::get('/games/{id}', 'GamesController@show');
-
+        Route::get('/games/{id}', 'GamesController@show')->name('show');
+    });
 });
 
 Route::get('fire', function () {
