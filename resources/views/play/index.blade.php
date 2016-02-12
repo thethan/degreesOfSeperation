@@ -35,7 +35,7 @@
             console.log(element);
             fadeOthers();
 
-            setTimeout(function(){location.href="/play/"+id} , 3000);
+            setTimeout(function(){location.href="/degrees/play/"+id} , 3000);
 
         }
 
