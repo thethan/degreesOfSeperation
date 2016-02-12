@@ -44,7 +44,7 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
     Route::group(['as' => 'play::'], function () {
         Route::get('/play', 'PlayController@index')->name('index');
 
-        Route::post('/play/validate/{resultId?}', 'PlayController@validateResults')->validate();
+        Route::post('/play/validate/{resultId?}', 'PlayController@validateResults')->name('validate');
 
         Route::get('/play/{id}/{resultId?}', 'PlayController@show')->name('show');
     });
