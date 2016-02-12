@@ -42,9 +42,9 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
-                    dos = JSON.parse(xhttp.responseText);
-                    console.log(dos);
-                    validatedDegrees(dos);
+                    obj = JSON.parse(xhttp.responseText);
+                    console.log(obj);
+                    validatedDegrees(obj.results);
 
                 }
             };
@@ -97,9 +97,10 @@
         }
 
         function validatedDegrees(dos) {
+            console.log(dos);
             var html = '';
             for (var i = 0; i < dos.length; i++) {
-                html += '<div class="'+ dos[i].type +'"><img class="' + dos[i].type  +'" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" ></div>';
+                html += '<div class="'+ dos[i].type + dos[i].class+'"><img class="' + dos[i].type + dos[i].class +'" src="https://image.tmdb.org/t/p/w185/' + dos[i].poster_path + '" ></div>';
             }
             document.getElementById('degrees').innerHTML = html;
         }
@@ -135,7 +136,7 @@
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
                 wildcard: '%QUERY',
-                url: '/degrees/search/movies/' + '%QUERY',
+                url: '{{ route('search::movies', ['search'=>'']) }}/' + '%QUERY',
                 filter: function (obj) {
                     // Map the remote source JSON array to a JavaScript object array
                     return $.map(obj.results, function (result) {
@@ -159,7 +160,7 @@
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
                 wildcard: '%QUERY',
-                url: '/search/people/' + '%QUERY',
+                url: '{{ route('search::people', ['search'=>'']) }}/' + '%QUERY',
                 filter: function (obj) {
                     // Map the remote source JSON array to a JavaScript object array
                     return $.map(obj.results, function (result) {

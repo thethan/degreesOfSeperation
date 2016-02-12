@@ -84,12 +84,13 @@ class ValidateResults extends Job
     {
         $game = $this->model->game;
 
-        $last = end($this->results);
-        $key = key($last);
+        $last = last($this->results);
+        end($this->results);
+        $key = key($this->results);
 
 
         if(!((int)$game->end === $last->id && $game->end_type === $last->type)){
-            $this->results[$key] = $this->addClass('wtf');
+            $this->results[$key]->class .= ' '.$this->addClass('wtf');
             $this->correct = 0;
         }
     }
@@ -156,16 +157,15 @@ class ValidateResults extends Job
 
     protected function addClass($bool)
     {
-
-        switch ($bool){
-            case true:
-                return 'corrent';
-            case 'wtf':
-                return 'wtf';
-            default:
-                return 'wrong';
-
+        if($bool === true ){
+            return ' correct';
+        } else if($bool === 'wtf'){
+            return ' wtf';
+        } else {
+            return  ' wrong';
         }
+
+
     }
 
     protected function checkIfCorrect()
