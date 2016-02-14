@@ -12,17 +12,18 @@ class DegreeSaved extends Event implements ShouldBroadcast
 {
     use SerializesModels;
 
-    public $data, $degrees, $gameId, $userId;
+    public $data, $degrees, $gameId, $userId, $resultId;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($userId, $dos, $gameId = null)
+    public function __construct($userId, $dos, $gameId = null, $resultId = null)
     {
         $this->gameId = $gameId;
         $this->userId = $userId;
+        $this->resultId = $resultId;
 
         $this->data = array(
             'dos' => $dos,
@@ -37,6 +38,6 @@ class DegreeSaved extends Event implements ShouldBroadcast
     public function broadcastOn()
     {
 
-        return ['user_'.$this->userId .'', "user_$this->userId" . "_game_$this->gameId", 'game_'.$this->gameId, 'user_63', 'test-channel'];
+        return ['user_'.$this->userId .'', "user_$this->userId" . "_game_$this->gameId", 'game_'.$this->gameId, 'user_63', 'result_'.$this->resultId, 'test-channel'];
     }
 }

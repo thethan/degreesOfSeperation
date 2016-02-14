@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
         Route::get('/degrees/{gameId}/{id}', 'DegreesController@getResult');
 
         Route::put('/degrees/person/{id}', 'DegreesController@personSelected');
+
     });
 
     Route::group(['as' => 'play::'], function () {
@@ -56,7 +57,10 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
 
         Route::get('/games/{id}', 'GamesController@show');
 
+        Route::get('/games/{gameId}/results', 'ResultsController@index');
+
     });
+
 
     Route::get('/clear', 'DegreesController@clearDegrees');
 

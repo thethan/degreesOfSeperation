@@ -15,10 +15,9 @@ elixir(function(mix) {
     mix.sass([
         //'../../../bower_components/tether/dist/css/*',
         'app.scss',
-        '../../../bower_components/bootstrap/scss/bootstrap-flex.scss',
         '../../../bower_components/typeahead.js/dist/typeahead.bundle.css',
 
-    ]);
+    ]).sass(['jenn.scss'], 'jenn.css');
 
     mix.scripts(
         [
@@ -28,7 +27,7 @@ elixir(function(mix) {
             '../../../bower_components/typeahead.js/dist/typeahead.bundle.js',
             'app.js'
         ])
-        .version(['js/all.js', 'css/app.css'])
+        .version(['js/all.js', 'css/app.css', 'css/jenn.css'])
     .browserSync({
         proxy: 'imdb.app'
     });

@@ -1,4 +1,4 @@
-
+@import '../../../bower_components/bootstrap/scss/bootstrap-flex.scss';
 .item, .grid-item {
   transition: opacity 3s ease-in-out;
   -moz-transition: opacity 3s ease-in-out;
@@ -32,5 +32,50 @@
 .grid-item {
 
 
+}
+
+#degrees {
+
+  @include make-row();
+  overflow-x:auto;
+  display: block;
+  .results {
+    //margin: 0 auto;
+    display: flex;
+    margin:0 auto;
+    img {
+      -webkit-align-items: center;
+      align-items: center;
+      height: 150px;
+    }
+  }
+}
+
+.selection {
+  @include make-col();
+
+  @media (max-width: 32em) {
+    @include make-col-span(6);
+  }
+  @media (min-width: 32.1em) {
+    @include make-col-span(8);
+  }
+
+  @include make-row();
+  display: flex;
+  &.undefined {
+    .icon {
+      display: none;
+    }
+  }
+  img {
+    @include make-col-span(6);
+    @include pull-left();
+
+    transform: scale(1.1) translateY(19px);
+    &:last-child {
+      @include pull-right();
+    }
+  }
 }
 

@@ -46,10 +46,10 @@ class ValidateResults extends Job
     public function handle()
     {
         //want the current Id in the last result movie
-        for($i = 1; $i < (count($this->results)); $i++) {
+        for ($i = 1; $i < (count($this->results)); $i++) {
 
             $current = $this->results[$i];
-            $prev = $this->results[$i-1];
+            $prev = $this->results[$i - 1];
 
             $currentCache = $this->returnCache($current);
             $prevCache = $this->returnCache($prev);
@@ -75,9 +75,7 @@ class ValidateResults extends Job
 
         $this->checkIfCorrect();
 
-
-        //TODO add the correct
-        // $this->finalCorrect();
+        $this->finalCorrect();
     }
 
     protected function validateLast()
@@ -89,8 +87,8 @@ class ValidateResults extends Job
         $key = key($this->results);
 
 
-        if(!((int)$game->end === $last->id && $game->end_type === $last->type)){
-            $this->results[$key]->class .= ' '.$this->addClass('wtf');
+        if (!((int)$game->end === $last->id && $game->end_type === $last->type)) {
+            $this->results[$key]->class .= ' ' . $this->addClass('wtf');
             $this->correct = 0;
         }
     }
@@ -98,7 +96,7 @@ class ValidateResults extends Job
 
     protected function finalCorrect()
     {
-        if($this->correct !== 0 || $this->correct === null){
+        if ($this->correct === null) {
             $this->correct = 1;
             $this->model->correct = $this->correct;
             $this->model->save();
@@ -107,11 +105,11 @@ class ValidateResults extends Job
 
     protected function returnCache($result)
     {
-        $key = $result->type.'/'.$result->id.'/credits';
+        $key = $result->type . '/' . $result->id . '/credits';
 
         $cache = $this->getCache($key);
 
-        if(empty($cache)){
+        if (empty($cache)) {
             $model = $this->getClass($result->type);
 
             $this->dispatch(new CacheFind($model, $result->id));
@@ -124,7 +122,7 @@ class ValidateResults extends Job
 
     private function getClass($type)
     {
-        switch ($type){
+        switch ($type) {
             case 'movie':
                 return new Movies();
                 break;
@@ -146,8 +144,8 @@ class ValidateResults extends Job
      */
     protected function loopThroughCredits($credits, $nextId)
     {
-        foreach($credits as $credit){
-            if($credit->id === $nextId){
+        foreach ($credits as $credit) {
+            if ($credit->id === $nextId) {
                 return true;
             }
         }
@@ -157,12 +155,12 @@ class ValidateResults extends Job
 
     protected function addClass($bool)
     {
-        if($bool === true ){
+        if ($bool === true) {
             return ' correct';
-        } else if($bool === 'wtf'){
+        } else if ($bool === 'wtf') {
             return ' wtf';
         } else {
-            return  ' wrong';
+            return ' wrong';
         }
 
 
@@ -170,9 +168,9 @@ class ValidateResults extends Job
 
     protected function checkIfCorrect()
     {
-        foreach($this->results as $result){
-            if(property_exists($result, 'correct')){
-                if($result->correct !== true){
+        foreach ($this->results as $result) {
+            if (property_exists($result, 'correct')) {
+                if ($result->correct !== true) {
                     $this->correct = 0;
                     break;
                 }

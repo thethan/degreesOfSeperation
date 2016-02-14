@@ -8,7 +8,6 @@ use Gate;
 use App\Game;
 use App\Results;
 use App\Http\Requests;
-use App\Events\DegreeSaved;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -22,25 +21,39 @@ class PlayController extends Controller
 
         $userId = Auth::user()->id;
 
-        $value = Cache::get('user_'.$userId.'_game_'.$id);
-
         $game = Game::findOrFail($id);
         $result = Results::find($resultId);
+
         if(empty($result)) {
-            $result = Results::where('game_id', $id)->where('user_id',$userId)->orderBy('id', 'DESC')->where('validated', 0)->first();
+            $result = Results::where('game_id', $id)
+                ->where('user_id',$userId)
+                ->where('validated','=', 0)
+                ->orderBy('id', 'DESC')->first();
 
             if(!empty($result)){
                 $resultId = $result->id;
             }
         }
 
-        if($resultId) {$this->authorize('show', [$result, $game]); }
+        if($resultId) {
+            $this->authorize('show', [$result, $game]);
+        }
+
 
         $result = dispatch(new ReadyPlayerOne($game, $resultId));
 
+        $results = Results::where('game_id', $id)
+                ->where('validated',1)
+                ->where('steps','>',0)->get();
+
+        foreach($results as &$completedResult){
+            $completedResult->user;
+        }
+
         return view('play.game')
             ->with('game', $game)
-            ->with('result', $result);
+            ->with('result', $result)
+            ->with('results', $results);
 
     }
 

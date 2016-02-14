@@ -40,5 +40,9 @@ class Results extends Model
         $this->save();
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

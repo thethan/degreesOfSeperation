@@ -6,6 +6,7 @@ use App\Game;
 use App\Actors;
 use App\Http\Requests;
 use App\Jobs\CacheFind;
+use App\Results;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -21,6 +22,8 @@ class GamesController extends Controller
             $game =  $this->gameReadable($game);
             $return[] = $game;
         }
+
+
 
         return view('games.index')->with('games', $return);
     }
