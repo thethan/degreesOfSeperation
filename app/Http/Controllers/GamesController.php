@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Game;
 use App\Actors;
+use App\Game;
 use App\Http\Requests;
 use App\Jobs\CacheFind;
-use App\Results;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -50,11 +49,17 @@ class GamesController extends Controller
 
     }
 
+    protected function dealWithPersonCache($cache)
+    {
+        $obj = json_decode($cache);
+
+        return $obj;
+    }
+
     protected function endReadable(Game $game)
     {
         $name = 'person/'.$game->end;
         $cache = Cache::get($name);
-
 
         if(!$cache){
             $actors = new Actors();
@@ -65,9 +70,19 @@ class GamesController extends Controller
 
         return $game;
     }
-    public function create()
-    {
 
+    public function destroy(Requests\DeleteGameRequest $requests)
+    {
+        $id = $requests->only('id');
+        var_dump($id);
+        $game = Game::findOrFail($id['id']);
+
+        $this->authorize('delete', Auth::user(), $game);
+
+        $game->delete();
+
+
+        return redirect('/degrees/games', 302);
     }
 
     /**
@@ -88,7 +103,7 @@ class GamesController extends Controller
 
         $game->save();
 
-        return redirect('/games', 302);
+        return redirect('/degrees/games', 302);
     }
 
     /**
@@ -99,13 +114,6 @@ class GamesController extends Controller
         $game = Game::find($id);
 
 
-    }
-
-    protected function dealWithPersonCache($cache)
-    {
-        $obj =  json_decode($cache);
-
-        return $obj;
     }
 
 }

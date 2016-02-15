@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use App\Results;
-use App\User;
 use App\Game;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class GamePolicies
@@ -22,6 +21,11 @@ class GamePolicies
     }
 
     public function update(User $user, Game $game)
+    {
+        return $user->id === $game->user_id;
+    }
+
+    public function delete(User $user, Game $game)
     {
         return $user->id === $game->user_id;
     }

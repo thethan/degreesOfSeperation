@@ -1,14 +1,17 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+    <style>
+        .typeahead {
+            position: absolute;
+        }
+    </style>
+@endsection
 
 @section('content')
     <section class="container">
         <div class="row">
-            <ol class="col-sm-8 col-sm-offset-2">
-                @foreach($games as $game)
-                    <li href="{{  url('/games', $game->id) }}">{{ $game->start }} to {{ $game->end }} </li>
-                @endforeach
-            </ol>
+
         </div>
         <div class="row col-sm-12">
             <h3 class="col-sm-3">New Game</h3>
@@ -32,13 +35,64 @@
                     </button>
                 </div>
             </form>
-            <a href="{{ url('/games') }}"></a>
+        </div>
+        <div class="row">
+            <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Created At</th>
+                    <th>Play</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Created At</th>
+                    <th>Play</th>
+                    <th>Delete</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                @foreach($games as $game)
+                    <tr>
+                        <td>{{ $game->id }}</td>
+                        <td>{{ $game->start }}</td>
+                        <td>{{ $game->end }}</td>
+                        <td>{{ $game->created_at }}</td>
+                        <td><a href="{{ route('play::game', ['id' => $game->id]) }}" class="btn btn-primary-outline">Play</a>
+                        </td>
+                        <td>
+                            <form action="{{ route('games::delete', ['id' => $game->id]) }}" method="POST">
+                                <input type="hidden" name="id" value="{{ $game->id }}">
+                                <input type="hidden" name="_method" value="delete">
+                                {!! csrf_field() !!}
+                                <input class="btn btn-danger-outline" type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
     </section>
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+
     <script>
+        $('#example').DataTable({
+            createdRow: function (row) {
+                $('td', row).attr('tabindex', 0);
+            }
+        });
+
         var movies = new Bloodhound({
 
             datumTokenizer: function (datum) {
@@ -111,8 +165,8 @@
         }).on('typeahead:selected', function (obj, datum) {
             datum._token = '{{ csrf_token() }}';
             datum.type = 'movie';
-            var xhr = new XMLHttpRequest()
-            var self = this
+            var xhr = new XMLHttpRequest();
+            var self = this;
             xhr.open('PUT', 'degrees/save', true);
             var params = datum;
 

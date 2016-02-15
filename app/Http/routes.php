@@ -47,13 +47,15 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
 
         Route::post('/play/validate/{resultId?}', 'PlayController@validateResults');
 
-        Route::get('/play/{id}/{resultId?}', 'PlayController@show');
+        Route::get('/play/{id}/{resultId?}', 'PlayController@show')->name('game');
     });
 
     Route::group(['as' => 'games::'], function () {
         Route::get('/games', 'GamesController@index');
 
         Route::post('/games', 'GamesController@save');
+
+        Route::delete('/games/{id}', 'GamesController@destroy')->name('delete');
 
         Route::get('/games/{id}', 'GamesController@show');
 
@@ -80,4 +82,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/', 'HomeController@index');
+
+    Route::get('/jenn/{id}', function ($id) {
+        return view('jenn.blade' . $id);
+    });
 });
+
