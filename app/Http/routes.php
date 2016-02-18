@@ -78,13 +78,15 @@ Route::get('test', function () {
     // this checks for the event
     return view('test');
 });
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
     Route::get('/', 'HomeController@index');
 
-    Route::get('/jenn/{id}', function ($id) {
-        return view('jenn.blade' . $id);
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/jenn/{id}', function ($id) {
+            return view('jenn.blade' . $id);
+        });
     });
 });
 

@@ -19,6 +19,7 @@ elixir(function(mix) {
 
     ]);
     mix.sass(['jenn.scss'], 'public/css/jenn.css');
+    mix.sass(['jenn2.scss'], 'public/css/jenn2.css');
 
     mix.scripts(
         [
@@ -33,8 +34,9 @@ elixir(function(mix) {
             '../../../bower_components/bootstrap/dist/js/bootstrap.js',
             'jenn.js']
         , 'public/js/jenn.js')
-        .version(['js/all.js', 'css/app.css', 'css/jenn.css', 'js/jenn.js'])
-    .browserSync({
-        proxy: 'imdb.app'
-    });
+        .version(['js/all.js', 'css/app.css', 'css/jenn.css', 'css/jenn2.css', 'js/jenn.js'])
+    //.browserSync({
+    //    proxy: 'imdb.app'
+    //})
+    ;
 });

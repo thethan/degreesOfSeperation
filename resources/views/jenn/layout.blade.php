@@ -10,18 +10,15 @@
     <!-- Fonts -->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ elixir('css/jenn.css') }}">
-
 
     @yield('styles')
 </head>
 <body>
-
+<div class="contentHeader">
+@yield('header')
 
 @yield('content')
-
-
-<script src="{{ elixir('js/jenn.js') }}"></script>
+</div>
 
 @yield('scripts')
 
