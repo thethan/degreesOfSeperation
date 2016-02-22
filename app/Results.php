@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace selftotten;
 
 use Illuminate\Database\Eloquent\Model;
 

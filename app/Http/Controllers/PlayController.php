@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
-use App\Jobs\ReadyPlayerOne;
-use App\Jobs\ValidateResults;
 use Gate;
-use App\Game;
-use App\Results;
-use App\Http\Requests;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
+use selftotten\Game;
+use selftotten\Http\Requests;
+use selftotten\Jobs\ReadyPlayerOne;
+use selftotten\Jobs\ValidateResults;
+use selftotten\Results;
 
 class PlayController extends Controller
 {

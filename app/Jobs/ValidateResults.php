@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Jobs;
+namespace selftotten\Jobs;
 
-use App\Actors;
-use App\Jobs\Job;
-use App\Movies;
-use App\Results;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use selftotten\Actors;
+use selftotten\Movies;
+use selftotten\Results;
 
 class ValidateResults extends Job
 {
@@ -68,41 +66,6 @@ class ValidateResults extends Job
         return $this->model;
     }
 
-    public function validate()
-    {
-        $this->validateLast();
-
-
-        $this->checkIfCorrect();
-
-        $this->finalCorrect();
-    }
-
-    protected function validateLast()
-    {
-        $game = $this->model->game;
-
-        $last = last($this->results);
-        end($this->results);
-        $key = key($this->results);
-
-
-        if (!((int)$game->end === $last->id && $game->end_type === $last->type)) {
-            $this->results[$key]->class .= ' ' . $this->addClass('wtf');
-            $this->correct = 0;
-        }
-    }
-
-
-    protected function finalCorrect()
-    {
-        if ($this->correct === null) {
-            $this->correct = 1;
-            $this->model->correct = $this->correct;
-            $this->model->save();
-        }
-    }
-
     protected function returnCache($result)
     {
         $key = $result->type . '/' . $result->id . '/credits';
@@ -120,6 +83,11 @@ class ValidateResults extends Job
         return $cache;
     }
 
+    protected function getCache($key)
+    {
+        return Cache::get($key);
+    }
+
     private function getClass($type)
     {
         switch ($type) {
@@ -130,11 +98,6 @@ class ValidateResults extends Job
                 return new Actors();
                 break;
         }
-    }
-
-    protected function getCache($key)
-    {
-        return Cache::get($key);
     }
 
     /**
@@ -166,6 +129,31 @@ class ValidateResults extends Job
 
     }
 
+    public function validate()
+    {
+        $this->validateLast();
+
+
+        $this->checkIfCorrect();
+
+        $this->finalCorrect();
+    }
+
+    protected function validateLast()
+    {
+        $game = $this->model->game;
+
+        $last = last($this->results);
+        end($this->results);
+        $key = key($this->results);
+
+
+        if (!((int)$game->end === $last->id && $game->end_type === $last->type)) {
+            $this->results[$key]->class .= ' ' . $this->addClass('wtf');
+            $this->correct = 0;
+        }
+    }
+
     protected function checkIfCorrect()
     {
         foreach ($this->results as $result) {
@@ -175,6 +163,15 @@ class ValidateResults extends Job
                     break;
                 }
             }
+        }
+    }
+
+    protected function finalCorrect()
+    {
+        if ($this->correct === null) {
+            $this->correct = 1;
+            $this->model->correct = $this->correct;
+            $this->model->save();
         }
     }
 

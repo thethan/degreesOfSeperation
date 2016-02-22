@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
+use selftotten\Http\Requests;
 
 class HomeController extends Controller
 {
@@ -24,5 +23,10 @@ class HomeController extends Controller
     public function index()
     {
         return view('welcome');
+    }
+
+    public function gate()
+    {
+        return view('gateTest');
     }
 }

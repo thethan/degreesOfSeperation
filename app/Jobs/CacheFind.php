@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Jobs;
+namespace selftotten\Jobs;
 
-use App\Jobs\Job;
-use App\TMDBModel;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
+use selftotten\TMDBModel;
 
 class CacheFind extends Job
 {

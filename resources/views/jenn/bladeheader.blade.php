@@ -29,12 +29,13 @@
 
 @section('content')
     <div class="blog">
-        <div class="stripe"></div>
-        <div class="stripe"></div>
-
+        <div class="stripes">
+            <div class="stripe transStart"></div>
+            <div class="stripe transStartTopSlideDown"></div>
+        </div>
     </div>
-    <h1 class="row col-xs-offset-3">Blog</h1>
-    <section>
+    <h1 class="fadeIn row col-xs-offset-3 ">Blog</h1>
+    <section class="fadeIn">
         <div class="articles">
             <article>
                 <h2>Why Ethan is the best person ever?</h2>
@@ -68,6 +69,7 @@
             </article>
         </div>
         <aside>
+            @can('edit_forum')
             <nav>
                 <ul>
                     <li>Not a real link</li>
@@ -75,6 +77,7 @@
                     <li>content</li>
                 </ul>
             </nav>
+            @endcan
         </aside>
 
     </section>

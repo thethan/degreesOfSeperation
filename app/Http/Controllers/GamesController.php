@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
-use App\Actors;
-use App\Game;
-use App\Http\Requests;
-use App\Jobs\CacheFind;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use selftotten\Actors;
+use selftotten\Game;
+use selftotten\Http\Requests;
+use selftotten\Jobs\CacheFind;
 
 class GamesController extends Controller
 {
@@ -74,7 +74,6 @@ class GamesController extends Controller
     public function destroy(Requests\DeleteGameRequest $requests)
     {
         $id = $requests->only('id');
-        var_dump($id);
         $game = Game::findOrFail($id['id']);
 
         $this->authorize('delete', Auth::user(), $game);

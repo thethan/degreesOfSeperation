@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Objects;
+namespace selftotten\Objects;
 
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
 
 interface ObjectInterface
 {

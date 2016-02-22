@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace selftotten\Http\Requests;
 
 class DeleteGameRequest extends Request
 {

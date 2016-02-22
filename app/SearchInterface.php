@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace selftotten;
 
 interface SearchInterface
 {

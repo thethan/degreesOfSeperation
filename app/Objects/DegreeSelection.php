@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Objects;
-
-use StdClass;
+namespace selftotten\Objects;
 
 class DegreeSelection
 {

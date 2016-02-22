@@ -1,8 +1,6 @@
 <?php
 
-namespace App;
-
-use GuzzleHttp\Client;
+namespace selftotten;
 
 
 interface ApiMovieDatabase

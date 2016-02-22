@@ -64,13 +64,17 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'degrees'], function 
     });
 
 
+    Route::group(['middleware' => 'auth.manageUsers'], function () {
+        Route::get('/users', 'UsersController@index');
+    });
+
     Route::get('/clear', 'DegreesController@clearDegrees');
 
 });
 
 Route::get('fire', function () {
     // this fires the event
-    event(new App\Events\EventName());
+    event(new selftotten\Events\EventName());
     return "event fired";
 });
 
@@ -78,12 +82,22 @@ Route::get('test', function () {
     // this checks for the event
     return view('test');
 });
+
+
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
     Route::get('/', 'HomeController@index');
 
+    Route::get('/gate', 'HomeController@gate');
+
     Route::group(['middleware' => ['auth']], function () {
+
+        Route::group(['middleware' => ['auth.blog'], 'as' => 'blog::'], function () {
+            Route::get('/posts', 'BlogController@index')->name('index');
+
+            Route::get('/posts/create', 'BlogController@create')->name('create');
+        });
         Route::get('/jenn/{id}', function ($id) {
             return view('jenn.blade' . $id);
         });

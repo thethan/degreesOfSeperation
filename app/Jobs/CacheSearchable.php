@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Jobs;
+namespace selftotten\Jobs;
 
-use App\TMDBModel;
-use Illuminate\Support\Facades\Cache;
-use App\Jobs\Job;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
+use selftotten\TMDBModel;
 
 class CacheSearchable extends Job implements ShouldQueue
 {

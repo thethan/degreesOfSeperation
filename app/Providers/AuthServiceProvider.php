@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Providers;
+namespace selftotten\Providers;
 
-use App\Game;
-use App\Results;
-use App\Policies\GamePolicies;
-use App\Policies\ResultsPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use selftotten\Game;
+use selftotten\Permission;
+use selftotten\Policies\GamePolicies;
+use selftotten\Policies\PostPolicy;
+use selftotten\Policies\ResultsPolicy;
+use selftotten\Policies\UsersPolicy;
+use selftotten\Post;
+use selftotten\Results;
+use selftotten\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,21 +22,31 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
         Game::class => GamePolicies::class,
         Results::class => ResultsPolicy::class,
+        Post::class => PostPolicy::class,
+        User::class => UsersPolicy::class,
     ];
 
     /**
      * Register any application authentication / authorization services.
      *
-     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
+     * @param  \Illuminate\Contracts\Auth\Access\Gate $gate
      * @return void
      */
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
 
-        //
+        foreach ($this->getPermissions() as $permission) {
+            $gate->define($permission->name, function ($user) use ($permission) {
+                return $user->hasRole($permission->roles);
+            });
+        }
+    }
+
+    protected function getPermissions()
+    {
+        return Permission::with('roles')->get();
     }
 }

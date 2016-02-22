@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Jobs;
+namespace selftotten\Jobs;
 
-use App\Game;
-use Illuminate\Support\Facades\Auth;
-use App\Jobs\Job;
-use App\Results;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
+use selftotten\Game;
+use selftotten\Results;
 
 class ReadyPlayerOne extends Job
 {

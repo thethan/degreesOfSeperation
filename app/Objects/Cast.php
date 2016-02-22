@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Objects;
+namespace selftotten\Objects;
 
 class Cast extends Object
 {

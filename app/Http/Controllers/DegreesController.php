@@ -1,29 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
-use App\Actors;
-use App\Events\DegreeSaved;
-use App\Jobs\CacheCredits;
-use App\Jobs\CacheFind;
-use App\Jobs\CaxheCredits;
-use App\Movies;
-use App\Results;
-use App\TMDBModel;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Symfony\Component\HttpFoundation\Session\Session;
+use selftotten\Actors;
+use selftotten\Events\DegreeSaved;
+use selftotten\Http\Requests;
+use selftotten\Jobs\CacheFind;
+use selftotten\Jobs\CaxheCredits;
+use selftotten\Movies;
+use selftotten\Results;
+use selftotten\TMDBModel;
 
 
 class DegreesController extends Controller
 {
     public function index()
     {
-//        $user = factory(\App\User::class)->create();
+//        $user = factory(\selftotten\User::class)->create();
 
         return view('welcome');
     }
@@ -101,6 +96,27 @@ class DegreesController extends Controller
 
     }
 
+    protected function getSearchObject($id, $type)
+    {
+        switch ($type) {
+            case 'movie':
+                $movies = new Movies($id);
+                break;
+
+            case 'person':
+                $movies = new Actors($id);
+                break;
+
+        }
+
+//        $movies->find($id);
+        $this->dispatch(new CacheFind($movies, $id));
+//        $movies->setCredits($id);
+//        $this->dispatch(new CacheCredits($movies));
+
+
+    }
+
     public function getResult(Request $request, $gameId, $id)
     {
         $result = Results::findOrFail($id);
@@ -133,27 +149,6 @@ class DegreesController extends Controller
         $movie = new Movies();
 
         $movie->find($id);
-    }
-
-    protected function getSearchObject($id, $type)
-    {
-        switch($type){
-            case 'movie':
-                $movies = new Movies($id);
-                break;
-
-            case 'person':
-                $movies = new Actors($id);
-                break;
-
-        }
-
-//        $movies->find($id);
-        $this->dispatch(new CacheFind($movies, $id));
-//        $movies->setCredits($id);
-//        $this->dispatch(new CacheCredits($movies));
-
-
     }
 
     protected function fireTheEvent()

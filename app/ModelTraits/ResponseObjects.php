@@ -1,10 +1,7 @@
 <?php
 
 
-namespace App\ModelTraits;
-
-use App\Objects\Object;
-use App\Objects\ObjectInterface;
+namespace selftotten\ModelTraits;
 
 
 trait ResponseObjects

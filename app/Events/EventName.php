@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Events;
+namespace selftotten\Events;
 
-use App\Events\Event;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 

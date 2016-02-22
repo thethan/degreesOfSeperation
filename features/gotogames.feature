@@ -4,8 +4,6 @@ Feature: Go to games
   I need to be able to access the games page
 
   Scenario: Go to games as a user
-    Given
-    And I have a file named "foo"
-    And I have a file named "bar"
-    When I run "ls"
-    Then I should get:
+    Given I am logged in
+    When I click on "play"
+    Then I should not see an "img" element

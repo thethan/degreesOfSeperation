@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ModelTraits;
+namespace selftotten\ModelTraits;
 
 
 trait Find {

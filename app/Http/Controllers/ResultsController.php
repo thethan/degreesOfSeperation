@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
-use App\Http\Requests;
-use App\Results;
+use selftotten\Http\Requests;
+use selftotten\Results;
 
 class ResultsController extends Controller
 {

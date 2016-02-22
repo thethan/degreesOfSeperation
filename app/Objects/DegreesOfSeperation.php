@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Objects;
+namespace selftotten\Objects;
 
 
 class DegreesOfSeperation

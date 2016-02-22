@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Jobs;
+namespace selftotten\Jobs;
 
-use App\Jobs\Job;
-use App\TMDBModel;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Cache;
+use selftotten\TMDBModel;
 
 class CacheCredits extends Job
 {

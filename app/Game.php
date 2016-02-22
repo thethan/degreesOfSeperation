@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace selftotten;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -16,7 +16,7 @@ class Game extends Model
     }
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('selftotten\User');
     }
 
     public function results()

@@ -1,27 +1,18 @@
 <?php
 
-namespace App;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Facades\Cache;
+namespace selftotten;
 
 class Movies extends TMDBModel implements SearchInterface, ApiMovieDatabase
 {
 
 
     public $body;
-
-    protected $uri;
-
     public $cast;
-
     public $cache;
+    protected $uri;
     /**
      * @var
      */
-
     /**
      * @var string
      */

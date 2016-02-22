@@ -31,7 +31,9 @@
 
 .grid-item {
 
-
+  img {
+    width: 45%;
+  }
 }
 
 #degrees {
@@ -76,6 +78,18 @@
     &:last-child {
       @include pull-right();
     }
+  }
+}
+
+form {
+  .redactor-toolbar {
+    z-index: 0 !important;
+  }
+  #content {
+    min-height: 17em;
+  }
+  .form-group {
+    margin: 1em 0;
   }
 }
 

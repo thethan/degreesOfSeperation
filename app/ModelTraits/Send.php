@@ -1,8 +1,6 @@
 <?php
 
-namespace App\ModelTraits;
-
-use App\Objects\ObjectInterface;
+namespace selftotten\ModelTraits;
 
 trait Send {
 

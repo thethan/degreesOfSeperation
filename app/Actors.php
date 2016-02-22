@@ -1,13 +1,8 @@
 <?php
 
-namespace App;
+namespace selftotten;
 
-use App\Jobs\CacheFind;
-use App\Objects\Cast;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Facades\Cache;
+use selftotten\Jobs\CacheFind;
 
 class Actors extends TMDBModel implements SearchInterface, ApiMovieDatabase
 {

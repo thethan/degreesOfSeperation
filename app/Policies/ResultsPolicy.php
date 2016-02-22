@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace selftotten\Policies;
 
-use App\Game;
-use App\User;
-use App\Results;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use selftotten\Game;
+use selftotten\Results;
+use selftotten\User;
 
 class ResultsPolicy
 {

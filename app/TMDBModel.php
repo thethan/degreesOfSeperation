@@ -1,15 +1,13 @@
 <?php
 
-namespace App;
+namespace selftotten;
 
-use App\Jobs\CacheFind;
-use App\ModelTraits\Find;
-use App\ModelTraits\Send;
-use App\Objects\Cast;
-use App\ModelTraits\Search;
 use GuzzleHttp\Client;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Cache;
+use selftotten\Jobs\CacheFind;
+use selftotten\ModelTraits\Find;
+use selftotten\ModelTraits\Search;
+use selftotten\Objects\Cast;
 
 class TMDBModel implements ApiMovieDatabase
 {
@@ -65,16 +63,14 @@ class TMDBModel implements ApiMovieDatabase
      * @var string
      */
     protected $_method = 'GET';
-
-    /**
-     * @var string
-     */
-    private $api_key = '0efd46e620a107df3362f01a25c1ff7b';
-
     /**
      * @var
      */
     protected $cache;
+    /**
+     * @var string
+     */
+    private $api_key = '0efd46e620a107df3362f01a25c1ff7b';
 
     /**
      * TMDBModel constructor.
@@ -87,6 +83,14 @@ class TMDBModel implements ApiMovieDatabase
         if($id){
             $this->id = $id;
         }
+    }
+
+    /**
+     * Set the API Key to the Query String
+     */
+    private function setApiKey()
+    {
+        $this->setQuery('api_key', $this->api_key);
     }
 
     /**
@@ -112,15 +116,6 @@ class TMDBModel implements ApiMovieDatabase
 
         return $this->credits;
 
-    }
-
-
-    /**
-     * Set the API Key to the Query String
-     */
-    private function setApiKey()
-    {
-        $this->setQuery('api_key', $this->api_key);
     }
 
     public function poster($id = null)

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace selftotten\Http\Controllers;
 
 
-
-use App\Movies;
+use selftotten\Movies;
 
 class ImdbController extends Controller
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Policies;
+namespace selftotten\Policies;
 
-use App\Game;
-use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use selftotten\Game;
+use selftotten\User;
 
 class GamePolicies
 {

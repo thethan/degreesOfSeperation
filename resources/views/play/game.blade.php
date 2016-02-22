@@ -16,24 +16,24 @@
             <input id="authId" value="{{ Auth::user()->id }}" type="hidden">
 
             <div class="col-sm-12 row">
-                <div class="col-sm-2">
+                <div class="col-md-6">
                     <img src="https://image.tmdb.org/t/p/w185/{{ $game->start_image }}" alt="">
-                </div>
-                <div class="selection col-sm-6 col-sm-offset-1">
 
-                    <div class="first" id="lastSelection">
+                    <img class="pull-right" src="https://image.tmdb.org/t/p/w185/{{ $game->end_image }}" alt="">
 
-                    </div>
-                    <div>
-                        <input class="movie typeahead col-sm-3 col-sm-offset-1" onkeyup="topResult()">
-                        <input class="person typeahead col-sm-4 col-sm-offset-1" onkeyup="topResult()">
-                        <div class="next" id="upcoming">
+                    <div class="selection col-sm-6 col-sm-offset-1">
+
+                        <div class="first col-sm-6 col-xs-12 " id="lastSelection">
 
                         </div>
+                        <div class=" col-sm-6 col-xs-12">
+                            <input class="movie typeahead col-sm-3 col-sm-offset-1" onkeyup="topResult()">
+                            <input class="person typeahead col-sm-4 col-sm-offset-1" onkeyup="topResult()">
+                            <div class="next" id="upcoming">
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-2">
-                    <img class="pull-right" src="https://image.tmdb.org/t/p/w185/{{ $game->end_image }}" alt="">
                 </div>
             </div>
             <div class="col-sm-12 ">
@@ -60,7 +60,7 @@
         <a id="validate" onclick="validate()" class="col-sm-2 btn btn-large btn-primary-outline" type="submit"
            value="submit">validate</a>
 
-        <table id="example" class="display" cellspacing="0" width="100%">
+        <table id="example" class=" dt-responsive" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th>Id</th>
@@ -91,9 +91,9 @@
                     <td>{{ $completedResult->steps }}</td>
                     @if($completedResult->correct == '1')
                         <td>Yes</td>
-                        @else
-                            <td>Not even close</td>
-                        @endif
+                    @else
+                        <td>Not even close</td>
+                    @endif
 
                 </tr>
             @endforeach
@@ -303,8 +303,8 @@
         }).on('typeahead:selected', function (obj, datum) {
             datum._token = '{{ csrf_token() }}';
             datum.type = 'movie';
-            var xhr = new XMLHttpRequest()
-            var self = this
+            var xhr = new XMLHttpRequest();
+            var self = this;
             xhr.open('PUT', '/degrees/degrees/save/{{$result->id}}', true);
             var params = datum;
 
@@ -343,8 +343,8 @@
         }).on('typeahead:selected', function (obj, datum) {
             datum._token = '{{ csrf_token() }}';
             datum.type = 'person';
-            var xhr = new XMLHttpRequest()
-            var self = this
+            var xhr = new XMLHttpRequest();
+            var self = this;
             xhr.open('PUT', '/degrees/degrees/save/{{$result->id}}', true);
             var params = datum;
 

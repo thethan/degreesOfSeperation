@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ModelTraits;
+namespace selftotten\ModelTraits;
 
-use App\Objects\Search as SearchObject;
+use selftotten\Objects\Search as SearchObject;
 
 trait Search {
 
